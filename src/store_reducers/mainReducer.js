@@ -4,10 +4,16 @@ import {variables} from '../variables/variables';
 
 function appReducer(state = variables, action){
     switch (action.type){
-        case 'add_task': {
+        case 'active_page': {
             return {
                 ...state,
-                tasks_array: action.payload
+                active_page: action.payload
+            }
+        }
+        case 'change_state': {
+            return {
+                ...state,
+                [action.payload.name]: action.payload.value
             }
         }
         default:

@@ -11,7 +11,9 @@ function Menu(){
     return (
         <>
         <div className="menu_box flexCC">
-            
+            <div className="menu_btn" onClick={()=>dispatch({type: 'active_page', payload: 'strona_glowna'})}>Strona główna</div>
+            <div className="menu_btn" onClick={()=>dispatch({type: 'active_page', payload: 'towary'})}>Towary</div>
+            <div className="menu_btn" onClick={()=>dispatch({type: 'active_page', payload: 'statystyka'})}>Statystyki</div>
         </div>
         </>
     )

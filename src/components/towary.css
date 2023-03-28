@@ -1,0 +1,80 @@
+.towary_btn_box {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+}
+.towary_btn {
+    width: 200px;
+    height: 40px;
+    background-color: white;
+    cursor: pointer;
+    border: solid 1px gray;
+}
+.towary_btn:hover {
+    background-color: var(--color_2);
+    color: white;
+}
+.towary_box_data {
+    width: 100%;
+}
+.towary_box_data div {
+    width: 100%;
+}
+.input_box {
+    width: 100%;
+}
+.input_box input, .input_box select {
+    width: 300px;
+    max-width: 80vw;
+    height: 40px;
+    font-size: 20px;
+}
+.kwota {
+    font-size: 24px;
+}
+.kwota input {
+    margin-left: 10px;
+}
+.input_box_title {
+    font-size: 24px;
+    color: var(--color_2);
+    text-align: center;
+}
+
+.dodaj_towar_box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    z-index: 1;
+    border-bottom: solid 2px var(--color_2);
+}
+
+.lista_towarow {
+    width: 100%;
+}
+.towar_box {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+}
+.towar_box div {
+    width: 25%;
+}
+.edytuj_towar, .usun_towar {
+    cursor: pointer;
+    background-color: var(--color_2);
+    color: white;
+    padding: 0px 2px;
+    border-radius: 5px;
+    height: 40px;
+    margin: 0px 2px;
+    font-size: 14px;
+}
+.edytuj_towar:hover, .usun_towar:hover {
+    color: var(--color_2);
+    background-color: white;
+    border: solid 2px var(--color_2);
+}

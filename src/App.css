@@ -1,3 +1,7 @@
+:root {
+  --color_1: rgb(97, 155, 255);
+  --color_2: rgb(3, 38, 99);
+}
 * {
   margin: 0;
   padding: 0;
@@ -7,4 +11,12 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+.close {
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
