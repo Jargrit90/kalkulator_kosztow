@@ -7,6 +7,12 @@ import './towary.css';
 
 import * as f from './functions';
 
+let props_nazwa_towaru = "";
+let props_jednostka = "";
+let props_zlote = 0;
+let props_grosze = 0;
+let props_index = 0;
+
 function Towary(){
     let app = useSelector(state => state.app);
     const dispatch = useDispatch();
@@ -19,7 +25,7 @@ function Towary(){
         }
         dispatch({type: 'change_state', payload: {name: 'towary', value: json}});
     },[]);
-    let towary = app.towary.map(el => <Towar key={index++} nazwa_towaru={el.name} jednostka={el.jednostka} zlote={el.zlote} grosze={el.grosze} cena={el.cena}/>);
+    let towary = app.towary.map(el => <Towar index={index} key={index++} nazwa_towaru={el.name} jednostka={el.jednostka} zlote={el.zlote} grosze={el.grosze} cena={el.cena}/>);
     return (
         <>
             <div className="towary_box">
@@ -48,13 +54,31 @@ function Towary(){
 function Towar(props){
     let app = useSelector(state => state.app);
     const dispatch = useDispatch();
+    let usun_towar = ()=>{
+        let index = props.index;
+        let towary = [...app.towary];
+        towary.splice(index, 1);
+        dispatch({type: 'change_state', payload: {name: 'towary', value: towary}});
+        let json = JSON.stringify(towary);
+        localStorage.setItem("towary", json);
+    }
+    let edytuj_towar = ()=>{
+        props_index = props.index;
+        console.log(props_index);
+        props_nazwa_towaru = props.nazwa_towaru;
+        props_jednostka = props.jednostka;
+        props_zlote = props.zlote;
+        props_grosze = props.grosze;
+        dispatch({type: 'change_state', payload: {name: 'edytuj_towar', value: true}});
+        dispatch({type: 'change_state', payload: {name: 'dodaj_towar', value: true}});
+    }
     return (
         <>
             <div className="towar_box flexCC">
                 <div className="nazwa_towaru flexCC">{props.nazwa_towaru}</div>
                 <div className="jednostka flexCC">{props.jednostka}</div>
                 <div className="cena_towaru flexCC">{props.zlote} zł {props.grosze < 10 ? "0" + props.grosze : props.grosze} gr</div>
-                <div className="flexCC"><div className="edytuj_towar flexCC">Edytuj</div><div className="usun_towar flexCC">Usuń</div></div>
+                <div className="flexCC"><div className="edytuj_towar flexCC" onClick={()=>edytuj_towar()}>Edytuj</div><div className="usun_towar flexCC" onClick={()=>usun_towar()}>Usuń</div></div>
             </div>
         </>
     )
@@ -97,13 +121,38 @@ function Dodaj_towar(){
             localStorage.setItem("towary", json);
         }
     }
+    let edytuj_towar = ()=>{
+        let nazwa_towaru = f.g(".nazwa_towaru");
+        let jednostka = f.g("#jednostka");
+        let kwota_1 = f.g(".kwota_1");
+        let kwota_2 = f.g(".kwota_2");
+        
+        let towary = [...app.towary];
+
+        if(nazwa_towaru[0].value === ""){
+            alert("Nazwa towaru nie może być pusta");
+        }
+        else {
+            let pelna_kwota = parseInt(kwota_1[0].value) * 100 + parseInt(kwota_2[0].value);
+            
+            towary[props_index].name = nazwa_towaru[0].value;
+            towary[props_index].jednostka = jednostka.value;
+            towary[props_index].zlote = kwota_1[0].value;
+            towary[props_index].grosze = kwota_2[0].value;
+            towary[props_index].cena = pelna_kwota;
+
+            dispatch({type: 'change_state', payload: {name: 'towary', value: towary}});
+            let json = JSON.stringify(towary);
+            localStorage.setItem("towary", json);
+        }
+    }
     return (
         <>
             <div className="dodaj_towar_box flexCC">
                 <div className="close flexCC" onClick={()=>dispatch({type: 'change_state', payload:{name: 'dodaj_towar', value: false}})}>X</div>
                 <div className="input_box flexCC">
                     <div className="input_box input_box_title">Nazwa towaru:</div>
-                    <input type="text" className="nazwa_towaru" required/>
+                    <input type="text" className="nazwa_towaru" placeholder={props_nazwa_towaru !== "" ? props_nazwa_towaru : undefined} required/>
                 </div>
                 <div className="input_box flexCC">
                     <div className="input_box input_box_title">Jednostka towarowa:</div> 
@@ -113,10 +162,10 @@ function Dodaj_towar(){
                 </div>
                 <div className="input_box flexCC">
                     <div className="input_box input_box_title">Cena jednostkowa:</div>  
-                    <div className="kwota"><input type="number" className="kwota_1"  min={0} required/> zł </div>
-                    <div className="kwota"><input type="number" className="kwota_2" min={0} max={99} onChange={(event)=>maks_wartosc(event)} required/> gr </div>
+                    <div className="kwota"><input type="number" className="kwota_1"  min={0} required placeholder={props_zlote !== "" ? props_zlote : undefined}/> zł </div>
+                    <div className="kwota"><input type="number" className="kwota_2" min={0} max={99} placeholder={props_grosze !== "" ? props_grosze : undefined} onChange={(event)=>maks_wartosc(event)} required/> gr </div>
                 </div>
-                <div className="flexCC" onClick={()=>{dodaj_towar(); dispatch({type: 'change_state', payload: {name: 'dodaj_towar', value: false}})}}>Zapisz towar</div>
+                <div className="flexCC" onClick={app.edytuj_towar ? ()=>{edytuj_towar(); dispatch({type: 'change_state', payload: {name: 'dodaj_towar', value: false}})} : ()=>{dodaj_towar(); dispatch({type: 'change_state', payload: {name: 'dodaj_towar', value: false}})}}>Zapisz towar</div>
             </div>
         </>
     )

@@ -1,0 +1,39 @@
+.transakcja_box {
+    width: 100%;
+    background-color: lightblue;
+    margin: 10px 0px;
+    border-bottom: solid 2px var(--color_2);
+    border-top: solid 2px var(--color_2);
+}
+.data_transakcji {
+    text-align: center;
+    font-size: 24px;
+}
+.dane_transakcji_desc, .transakcja_btn{
+    padding: 5px;
+    margin: 5px;
+}
+.dane_towaru {
+    width: 25%;
+    text-align: center;
+    margin: 10px 0px;
+}
+.transakcje_tabela {
+    padding: 10px 0px;
+    background-color: var(--color_2);
+    color: white;
+}
+.transakcje_tabela div {
+    width: 25%;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.dane_transakcji_desc {
+    font-size: 20px;
+    font-weight: bold;
+}
+.wypis_transakcji {
+    height: 80vh;
+    overflow: auto;
+}

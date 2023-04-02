@@ -1,0 +1,39 @@
+.dodaj_transakcje_btn {
+    width: 200px;
+    height: 50px;
+    border: solid 1px var(--color_2);
+    color: var(--color_2);
+    font-size: 24px;
+    margin: 20px 0px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.dodaj_transakcje_btn:hover {
+    color: white;
+    background-color: var(--color_2);
+}
+.dodaj_transakcje_box {
+    min-height: 400px;
+    height: auto;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: white;
+    border-bottom: solid 2px var(--color_2);
+}
+.towar_data {
+    width: 200px;
+}
+
+.towar_data_box div {
+    margin: 5px 5px;
+}
+.przychod_box_title, .zarobek {
+    width: 100%;
+}
+
+.wydatek, .przychod {
+    margin: 10px 0px;
+    font-size: 24px;
+}
