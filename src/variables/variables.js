@@ -13,5 +13,10 @@ export const variables = {
     temp_przychod: 0,
     temp_dochod: 0,
     temp_date: '',
-    transakcje: []
+    transakcje: [],
+    edycja_transakcji: false,
+    numer_edytowanej_transakcji: 0,
+    rok_transakcji: 2022,
+    miesiac_transakcji: 3,
+    towary_dane: []
 }

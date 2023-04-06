@@ -33,7 +33,7 @@ function Strona_glowna(){
                     <div className="dodaj_transakcje_btn flexCC" onClick={()=>dispatch({type: 'change_state', payload: {name: 'dodaj_transakcje', value: true}})}>Dodaj transakcję</div>
                 </div>
                 {app.dodaj_transakcje ? <DodajTransakcje /> : null}
-                <div className="wypis_transakcji flexCC">
+                <div className="wypis_transakcji">
                     {transakcje}
                 </div>
             </div>
@@ -52,6 +52,13 @@ function Transakcja(props){
             <div className="dane_towaru cena_towaru">{app.towary[el.index].zlote} zł {app.towary[el.index].grosze} gr</div>
         </div>
     );
+    let usun_transakcje = (num)=>{
+        let transakcje = [...app.transakcje];
+        transakcje.splice(num, 1);
+        dispatch({type: 'change_state', payload: {name: 'transakcje', value: transakcje}});
+        let json = JSON.stringify(transakcje);
+        localStorage.setItem('transakcje', json);
+    }
     return (
         <>
             <div className="transakcja_box">
@@ -71,8 +78,12 @@ function Transakcja(props){
                     <div className="dane_transakcji_desc">Dochód: {(parseFloat(props.el.income) - parseFloat(props.el.wydatek)).toFixed(2)} zł</div>
                 </div>
                 <div className="transakcja_btns flexCC">
-                    <div className="transakcja_btn">Edytuj transakcję</div>
-                    <div className="transakcja_btn">Usuń transakcję</div>
+                    <div className="transakcja_btn"onClick={()=>{
+                        dispatch({type: 'change_state', payload: {name: 'numer_edytowanej_transakcji', value: props.index}});
+                        dispatch({type: 'change_state', payload: {name: 'edycja_transakcji', value: true}});
+                        dispatch({type: 'change_state', payload: {name: 'dodaj_transakcje', value: true}})}
+                    }>Edytuj transakcję</div>
+                    <div className="transakcja_btn" onClick={()=>usun_transakcje(props.index)}>Usuń transakcję</div>
                 </div>
             </div>
         </>
@@ -121,11 +132,16 @@ function DodajTransakcje(){
             wydatek: parseFloat(app.temp_wydatek)
         }
         let transakcje = [...app.transakcje];
-        transakcje.push(obj);
-        console.log(transakcje);
+        if(app.edycja_transakcji === true){
+            transakcje[app.numer_edytowanej_transakcji] = obj;
+        }
+        else {
+            transakcje.push(obj);
+        }
         dispatch({type:'change_state', payload: {name:'transakcje', value: transakcje}});
         let json = JSON.stringify(transakcje)
         localStorage.setItem('transakcje', json);
+        dispatch({type: 'change_state', payload: {name: 'edycja_transakcji', value: false}});
     }
 
     useEffect(()=>{
