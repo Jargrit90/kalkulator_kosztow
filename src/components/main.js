@@ -78,7 +78,7 @@ function Transakcja(props){
                     <div className="dane_transakcji_desc">Dochód: {(parseFloat(props.el.income) - parseFloat(props.el.wydatek)).toFixed(2)} zł</div>
                 </div>
                 <div className="transakcja_btns flexCC">
-                    <div className="transakcja_btn"onClick={()=>{
+                    <div className="transakcja_btn" onClick={()=>{
                         dispatch({type: 'change_state', payload: {name: 'numer_edytowanej_transakcji', value: props.index}});
                         dispatch({type: 'change_state', payload: {name: 'edycja_transakcji', value: true}});
                         dispatch({type: 'change_state', payload: {name: 'dodaj_transakcje', value: true}})}

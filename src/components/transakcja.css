@@ -37,3 +37,15 @@
     height: 80vh;
     overflow: auto;
 }
+.transakcja_btn {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--color_2);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.transakcja_btn:hover {
+    color: var(--color_2);
+    background-color: white;
+}

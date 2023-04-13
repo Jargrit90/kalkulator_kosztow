@@ -73,3 +73,6 @@
     font-size: 20px;
     margin: 0px 20px;
 }
+.miesiac_transakcji, .rok_transakcji {
+    margin: 0px 10px;
+}
