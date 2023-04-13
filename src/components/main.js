@@ -74,7 +74,7 @@ function Transakcja(props){
                 </div>
                 <div className="dane_transakcji flexCC">
                     <div className="dane_transakcji_desc">Przychód: {props.el.income} zł</div>
-                    <div className="dane_transakcji_desc">Wydatki: {props.el.wydatek} zł</div>
+                    <div className="dane_transakcji_desc">Wydatki: {parseFloat(props.el.wydatek).toFixed(2)} zł</div>
                     <div className="dane_transakcji_desc">Dochód: {(parseFloat(props.el.income) - parseFloat(props.el.wydatek)).toFixed(2)} zł</div>
                 </div>
                 <div className="transakcja_btns flexCC">

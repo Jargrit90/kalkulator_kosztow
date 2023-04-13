@@ -16,7 +16,7 @@ export const variables = {
     transakcje: [],
     edycja_transakcji: false,
     numer_edytowanej_transakcji: 0,
-    rok_transakcji: 2022,
-    miesiac_transakcji: 3,
+    rok_transakcji: 0,
+    miesiac_transakcji: 0,
     towary_dane: []
 }

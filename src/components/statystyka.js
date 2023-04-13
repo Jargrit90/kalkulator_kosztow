@@ -10,37 +10,62 @@ let towary_length;
 let towary_arr;
 let count_arr;
 let transakcje;
+
 function Statystyka(){
+    
     let app = useSelector(state => state.app);
     let dane_transakcji;
     towary_length = app.towary.length;
     towary_arr = new Array(parseInt(towary_length)).fill(0);
-    console.log(towary_arr);
     const dispatch = useDispatch();
+    let przychod = 0;
+    let wydatek = 0;
+    let dochod = 0;
+    let radial_background = '';
+    let colors = ["rgb(125, 32, 43)", "rgb(35, 129, 176)"];
     transakcje = app.transakcje.map((el) => {
         let data = new Date(el.date);
         
         let data_rok = data.getFullYear();
         let data_miesiac = data.getMonth() + 1;
-        
-        if(data_miesiac === app.miesiac_transakcji && data_rok === app.rok_transakcji){
-            let transakcja = el.transactions.map(el2 => {
-                towary_arr[el2.index] += el2.count;
-            }); 
-            console.log(towary_arr);
-            
+        if(app.miesiac_transakcji === 0){
+            if(data_rok === app.rok_transakcji){
+                let transakcja = el.transactions.map(el2 => {
+                    towary_arr[el2.index] += el2.count;
+                    
+                }); 
+                przychod += parseInt(el.income);
+                wydatek += parseInt(el.wydatek);
+            }
+        }
+        else {
+            if(data_miesiac === app.miesiac_transakcji && data_rok === app.rok_transakcji){
+                let transakcja = el.transactions.map(el2 => {
+                    towary_arr[el2.index] += el2.count;
+                    
+                }); 
+                przychod += parseInt(el.income);
+                wydatek += parseInt(el.wydatek);
+            }
         }
         
+        dochod = przychod - wydatek;
+        let radial_1 = ((wydatek/przychod)*100).toFixed(2);
+        let radial_2 = ((dochod/przychod)*100).toFixed(2);
+        radial_background = "conic-gradient("+ colors[0] +"0%, "+ colors[0] +" "+ radial_1 +"%, "+ colors[1] +" "+ radial_1 +"%, "+ colors[1] +" 100%)";
     });
-    let dane = towary_arr.map((el2, index) => <div className="flexCC">
-        <div>Nazwa towaru: {app.towary[index].name}</div>
-        <div>Ilość w {app.towary[index].jednostka}: {el2}</div>
+    let dane = towary_arr.map((el2, index) => <div key={index} className="statystyka_towaru">
+        <div className="nazwa_towaru_s flexCC">{app.towary[index].name}</div>
+        <div className="ilosc_towaru_s flexCC">{el2}{app.towary[index].jednostka}</div>
     </div>);
     let setMiesiac = (value)=>{
         dispatch({type: 'change_state', payload: {name: 'miesiac_transakcji', value: value}});
     }
     let setRok = (value)=>{
         dispatch({type: 'change_state', payload: {name: 'rok_transakcji', value: value}});
+    }
+    let style = {
+        backgroundImage: radial_background
     }
     return (
         <>
@@ -71,9 +96,23 @@ function Statystyka(){
                     }}/>
                 </div>
             </div>
-            <div className="dane_statystyczne">
+            <div className="dane_statystyczne flexCC">
                 {transakcje}
                 {dane}
+                <div className="rozliczenie">
+                    <div className="przychod">Twoje przychody wyniosły: <span className="przychod_wartosc statystyka_wartosc">{przychod}</span> zł</div>
+                    <div className="wydatek">Twoje wydatki wyniosły: <span className="wydatek_wartosc statystyka_wartosc">{wydatek}</span> zł</div>
+                    <div className="dochod">Twój dochód wyniósł: <span className="dochod_wartosc statystyka_wartosc">{dochod}</span> zł</div>
+                </div>
+                <div className="rozliczenie_diagram_1 flexCC">
+                    <div className="diagram_kolory flexCC">
+                        <div className="rozliczenie_dane flexCC">Dochód: <div className="square square_2"></div></div>
+                        <div className="rozliczenie_dane flexCC">Wydatki: <div className="square square_1"></div></div>
+                    </div>
+                    <div className="diagram_1" style={style}>
+
+                    </div>
+                </div>
             </div>
         </>
     )
