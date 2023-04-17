@@ -2,7 +2,7 @@ export const variables = {
     active_page: "strona_glowna",
     towary: [],
     dodaj_towar: false,
-    jednostki_towarowe: ["szt.", "kWh", "ml"],
+    jednostki_towarowe: ["szt.", "kWh", "ml", "opak."],
     edytuj_towar: false,
     dodaj_transakcje: false,
     towary_temporary_array: [],
